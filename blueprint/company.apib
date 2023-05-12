@@ -1,0 +1,2987 @@
+FORMAT: 1A
+HOST: https://company.laburando.co/v1
+
+# Laburando API for Companies
+
+### The Envelope
+Every response is contained by an envelope. That is, each response has a
+    predictable set of keys with which you can expect to interact:
+    
+    {
+        "meta": {
+            "code": 200
+        },
+        "data": {
+            ...
+        },
+        "pagination": {
+            "next_url": "...",
+            "next_max_id": "13872296"
+        }
+    }
+    
+
+#### META
+The meta key is used to communicate extra information about the response to
+    the developer. If all goes well, you'll only ever see a code key with value
+    200. However, sometimes things go wrong, and in that case you might see a
+    response like:
+
+    {
+        "meta": {
+            "error_type": "OAuthException",
+            "code": 400,
+            "error_message": "..."
+        }
+    }
+
+#### DATA
+    The data key is the meat of the response. It may be a list or dictionary,
+    but either way this is where you'll find the data you requested.
+
+# Data Structures
+
+## Company (object)
+
++ logo (string) - Company Logo URL
++ name (string) - Company Name
+
+## Companyreference (object)
+
++ id (number) - Companyreference ID
++ name (string) - Company Name
+
+
+## ContractType (object)
+
++ id (number) - ContractType ID
++ name (string) - Contract Type name
+
+## Country (object)
+
++ id (number) - Country ID
++ name (string) - Country name
+
+## CountryAdmin1 (object)
+
++ id (number) - Country Administrative Area Level 1 ID
++ name (string) - Country Administrative Area Level 1 name
+
+## CountryAdmin2 (object)
+
++ id (number) - Country Administrative Area Level 2 ID
++ name (string) - Country Administrative Area Level 2 name
+
+## Course (object)
+
++ id (number) - Course ID
++ name (string) - Course Name
++ date (string) - Course Date
++ institution (string) - Institution
+
+## Education (object)
+
++ educationlevel (Educationlevel)
++ institute (string) - Institution Name
++ title (string) - Edcuation Title Name
++ daystart (string) - Format 2015-12-31
++ dayend (string) - Format 2015-12-31
+
+## Educationlevel (object)
+
++ id (number) - Educationlevel ID
++ name (string) - Educationlevel name
+
+## Gender (object)
+
++ id (number) - Gender ID
++ name (string) - Gender description
+
+## IdType (object)
+
++ id (number) - IdType ID
++ name (string) - ID Type name
+
+## Inbox (object)
+
++ id (number) - IdType ID
++ company (Company) - Message Sender
++ user (User) - Message Receiver
++ job (Job) - Message Job Subject
++ title (string) - Message Title
++ content (string) - Message Content
+
+## Job (object)
+
++ id (string) - Job ID
++ quantity (number) - Number of vacancies
++ company (Company)
++ title (string) - Job Title
++ description (string) - Job Description
++ contracttype (ContractType)
++ published_at (string)
++ expired_at (string)
++ impairment (enum[number])
+    + `-1` - no
+    + `0` - not defined
+    + 1 - yes
++ jobcategory (JobCategory) - Job Category
++ jobtype (JobType) - Job Type
++ travel (enum[number])
+    + `-1` - no
+    + `0` - not defined
+    + 1 - yes
++ move (enum[number])
+    + `-1` - no
+    + `0` - not defined
+    + 1 - yes
++ salary (number) - Job Salary
++ salary_range(number) - Job Salary Range
++ salary_additional (string) - Job Salary Additionals
++ salary_noshow (enum[number]) - Defines if Salary must be 
+    + 0 - no
+    + 1 - yes
++ venue (Venue) - Venue where the Job will be done
++ languages (array[JobLanguage]) - Required Languages and Levels
++ requirements (array[JobRequirement]) - Requirements
++ favorite (number) - 0 = isnt marked as favorite, 1 = marked as favorite
++ apply (number) - 0 = user hasnt applied, 1 = user has applied
+
+## JobCategory (object)
+
++ id (number) - JobCategory ID
++ name (string) - JobCategory Name
+
+## JobRequirement (object)
+
++ type (enum[number])
+    + 0 - exclusive requirement
+    + 1 - non-exclusive requirement
++ description (string) - Job Requirement Description
+
+## JobType (object)
+
++ id (number) - Job Type ID
++ name (string) - Job Type Name
+
+## JobLanguage (object)
+
++ name (string) - Job Language name
++ level (string) - Job Language Level
+
+## Language (object)
+
++ id (number) - Language ID
++ name (Languagename) - Language name
++ level (Languagelevel) - Language Level
++ description (string) - Language Comments
++ certification (boolean) - Language Certification
+
+## Languagename (object)
+
++ id (number) - Language ID
++ name (string) - Language Name
+
+## Languagelevel (object)
+
++ id (number) - Languagelevel ID
++ level (string) - Languagelevel
++ name (string) - Languagelevel Name
++ description (string) - Languagelevel Description
+
+## Personalreference (object)
+
++ id (number) - Reference ID
++ name (string) - Reference Person Name
++ personalrelationship (string) - Personal Relationship
++ mobile (string) - Reference Mobile Number
++ telephone (string) - Reference Telephone Number
++ email (string) - Reference Email
+
+## Profile (object)
+
++ photo (string) - User Photo
++ description (string) - User Self Description
++ career (string) - User Career
++ birthday (string) - User Birthday
++ citizenship (string) - User Citizenship
++ relationship (Relationship) - User Relationship Status
++ children (number) - User Number of Children
++ gender (Gender) - 0 undefined, 1 male, 2 female
++ idtype (IdType) - User ID Type
++ idnumber (number) - User ID Number
++ address (string) - User Home Address
++ country (Country)
++ countryAdmin1 (CountryAdmin1)
++ countryAdmin2 (CountryAdmin2)
++ mobile (string) - User Mobile Number
++ telephone (string) - User Home Telephone Number
++ jobcategory (JobCategory) - User Preferred Job Category
++ workstatus (WorkStatus) - 0 not looking for a job, 1 active searching, 2 pasive searching
++ status (number) - User Status
+
+## ProfileFull (object)
+
++ photo (string) - User Photo
++ description (string) - User Self Description
++ career (string) - User Career
++ birthday (string) - User Birthday
++ citizenship (string) - User Citizenship
++ relationship (string) - User Relationship Status
++ children (number) - User Number of Children
++ gender (number) - 0 undefined, 1 male, 2 female
++ idtype (string) - User ID Type
++ idnumber (number) - User ID Number
++ address (string) - User Home Address
++ country (string)
++ countryAdmin1 (string)
++ countryAdmin2 (string)
++ mobile (string) - User Mobile Number
++ telephone (string) - User Home Telephone Number
++ jobcategory (JobCategory) - User Preferred Job Category
++ workstatus (WorkStatus) - 1 active searching, 2 pasive searching, 3 not looking for a job
++ status (number) - User Status
++ education (array[Education])
++ language (array[Language])
++ course (array[Course])
++ skill (array[Skill])
++ work (array[Work])
++ workreference (array[Workreference])
++ personalreference (array[Personalreference])
+
+## Workreference (object)
+
++ id (number) - Reference ID
++ name (string) - Reference Person Name
++ company (string) - Company Name
++ position (string) - Work Position Name
++ mobile (string) - Reference Mobile Number
++ telephone (string) - Reference Telephone Number
++ email (string) - Reference Email
++ verified (boolean) - Reference is verified
+
+## Relationship (object)
+
++ id (number) - Relationship ID
++ name (string) - Relationship Status name
+
+## Skill (object)
+
++ id (number) - Skill ID
++ name (string) - Skill name
++ description (string) - Skill additional description
+
+## User (object)
+
++ id (string) - User ID
++ email (string) - User Email
++ firstname (string) - User Firstname
++ lastname (string) - User Lastname
++ timezone (string) - User Timezone
++ status (number) - User Status
+
+## Venue (object)
+
++ id (number) - Venue ID
++ name (string) - Venue name
++ address (string) - Venue Address
++ country (string)
++ countryAdmin1 (string)
++ countryAdmin2 (string)
++ lat (number)
++ lng (number)
+
+## Work (object)
+
++ id (number) - Work` ID
++ company (string) - Company Name
++ position (string) - Position Name
++ activities (string) - Activities done in this Position
++ daystart (string) - Format 2015-12-31
++ dayend (string) - Format 2015-12-31
++ country (Country)
++ countryAdmin1 (CountryAdmin1)
++ countryAdmin2 (CountryAdmin2)
+
+## WorkStatus (object)
+
++ id (number) - WorkStatus ID
++ name (string) - WorkStatus description
+
+
+# Group Global actions
+
+## /inbox/
+Get User Inbox
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1212,
+                "status": 1,
+                "company": {
+                    "name": "Empresa SA"
+                },
+                "user": {
+                    "firstname": "Alfredo",
+                    "lastname": "Caseros"
+                },
+                "job": {
+                    "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                    "title": "Panadero",
+                    "published_at": "2016-12-31",
+                    "status": "1"
+                },
+                "title": "Favor enviar Certificados",
+                "content": "Enviar Certificado de Altura",
+            }
+        ]
+
++ Response 304 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
+    + Body
+    
+            {
+                "id": "12332",
+                "status": 2
+            }
+    
++ Response 200 (application/json)
+
+        {
+            "id": 1212,
+            "status": 2,
+            "company": {
+                "name": "Empresa SA"
+            },
+            "user": {
+                "firstname": "Alfredo",
+                "lastname": "Caseros"
+            },
+            "job": {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "title": "Panadero",
+                "published_at": "2016-12-31",
+                "status": "1"
+            },
+            "title": "Favor enviar Certificados",
+            "content": "Enviar Certificado de Altura",
+        }
+
++ Response 304 (application/json)
+
+## /init/{?device_id,app_version}
+System obsolecence
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (optional).
+`message` response is (optional).
+
++ Parameters
+    + device_id (string, required) - Device UUID
+    + app_version (string, required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            
++ Response 200 (application/json)
+
+        {
+            "obsolete": false,
+            "message": "Mensaje enviado desde el servidor para mostrar al usuario",
+        }
+
++ Response 304 (application/json)
+
+## /jobcategories/{?timestamp}
+Get updated Job Categories
+
+### GET
+Header `X-API-KEY` (required).
+
++ Parameters
+    + timestamp (number, required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        {
+            "timestamp": 1459191332,
+            "jobcategories": [
+                {
+                    "id": 1
+                    "name": "Administración / Oficina"
+                },
+                {
+                    "id": 2
+                    "name": "Almacén / Logística"
+                }
+            ]
+        }
+
++ Response 304 (application/json)
+
+## /profilecompletion/{?timestamp}
+Get User Completion Profile
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required).
+
++ Parameters
+    + timestamp (number, required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        {
+            "timestamp": 1462838400,
+            "percentage": 60,
+            "incomplete": [
+                {
+                    "name": "Educación",
+                    "required": true
+                },
+                {
+                    "name": "Experiencia",
+                    "required": true
+                }
+            ]
+        }
+
++ Response 304 (application/json)
+
+## /idtype/
+ID Type list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 2,
+                "name": "Cedula de Ciudadanía"
+            },
+            {
+                "id": 3,
+                "name": "Cedula de Extranjería"
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /relationship/
+Relationship Type list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 2,
+                "name": "Casado"
+            },
+            {
+                "id": 3,
+                "name": "Soltero"
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /gender/
+Gender Type list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Hombre"
+            },
+            {
+                "id": 2,
+                "name": "Mujer"
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /location/{?query}
+City Location List
+
+### GET
+Header `X-API-KEY` (required).
+
++ Parameters
+    + query (string, required)
+    
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": "249-12-345",
+                "name": "Bucaramanga, Santander, Colombia"
+            },
+            {
+                "id": "249-12-961",
+                "name": "Barrancabermeja, Santander, Colombia"
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /signup
+Signup registration
+
+### POST
+Header `X-API-KEY` (required).
+
++ Request (application/json)
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "password": "lacontraseña",
+                "email": "user@example.com",
+                "location": "123-456-789",
+                "jobcategory_id": 1234
+                
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+                
+            {
+                "id": "b9a3ff77-23a5-11e6-9513-0800274f2cef",
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "timezone": "America/Bogota",
+                "status": 1
+            }
+
+
+## /login
+User Login
+
+### POST
+Header `X-API-KEY` (required).
+
++ Request (application/json)
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "user": "email@arara.com or mobile phone number",
+                "password": "secret",
+            }
+
++ Response 200 (application/json)
+    + Attributes (User)
+    
+    + Body
+                
+            {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "email": "user@example.com",
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "timezone": "America/Bogota",
+                "status": 1,
+                "message": "El usuario se encuentra suspendido"
+            }
+
+## /recoverpassword
+Password Recovery
+
+### POST
+Header `X-API-KEY` (required).
+            
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "email": "email@example.com"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+                
+            {
+              "success": true,
+              "message": "El correo no se encuentra registrado"
+            }
+
++ Response 404 (application/json)
+
+## /educationlevel/
+Education Level list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Primaria"
+            },
+            {
+                "id": 2,
+                "name": "Bachiller"
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /languagelevel/
+Language Level list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "level": "A0",
+                "name": "Principiante",
+                "description": "No tiene conocimientos previos del idioma."
+            },
+            {
+                 "id": 2,
+                "level": "A1",
+                "name": "Básico",
+                "description": "Puede entender frases hechas, estructuras básicas y formas oraciones simples."
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /languagename/
+Language Name list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "chino"
+            },
+            {
+                "id": 2,
+                "name": "español"
+            }
+        ]
+
++ Response 404 (application/json)
+
+## /workstatus/
+Work Status list
+
+### GET
+Header `X-API-KEY` (required).
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Búsqueda Activa"
+            },
+            {
+                "id": 2,
+                "name": "Búsqueda Pasiva"
+            }
+        ]
+
++ Response 404 (application/json)
+
+# Group Jobs
+
+## /job/{?id,lat,lng,r,jc,sr,q,summary}
+Job Search
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (optional)
+Summary: 
+
+    [
+        {
+            "id":"b3235571-d284-11e5-804f-008cfa0709a0",
+            "quantity":1,
+            "company": {
+                "logo":null,
+                "name":"DISPEZ RIO Y MAR SA"
+            },
+            "title":"Administrador(a) Edificio",
+            "venue":{
+                "lat": 4.6890893,
+                "lng": -74.0723214
+            },
+            "favorite": 0,
+            "apply": 1
+        },
+        ...
+    ]
+
++ Parameters
+    + id (string, optional) - Job ID
+    + lat (number, required) - Latitude
+    + lng (number, required) - Longitude
+    + r (number, required) - Radius
+    + jc (number, optional) - Job Category ID
+    + sr (number, optional) - Salary Range
+    + q (string, optional) - Words
+    + summary: "1" (number, optional) - If response should be summarized
+    
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Job])
+    
+    + Body
+    
+            [
+              {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "quantity": 3,
+                "company": {
+                  "logo": "https://example.com/logo.jpg",
+                  "name": "Banco XYZ",
+                },
+                "title": "Chef",
+                "description": "Minimo técnico en cocina con experiencia de minimo 4 años en hoteles y/o restaurantes de alto nivel",
+                "contracttype": "Término Fijo",
+                "published_at": "2015-02-09 10:03:28",
+                "expired_at": "2015-03-09 10:03:28",
+                "impairment": true,
+                "jobcategory": "Contabilidad / Finanzas",
+                "jobtype": "Tiempo Completo",
+                "travel": false,
+                "move": true,
+                "salary": "$ 123,456,789 mas bonos",
+                "venue": {
+                  "name": "Sede Uno",
+                  "address": "Carrera 12 # 13 - 14",
+                  "country": {
+                    "name": "Colombia"
+                  },
+                  "countryAdmin1": {
+                    "name": "Atlántico"
+                  },
+                  "countryAdmin2": {
+                    "name": "Barranquilla"
+                  },
+                  "lat": 11.004107,
+                  "lng": -74.806981
+                },
+                "languages": [
+                  {
+                    "name": "Inglés",
+                    "level": "Avanzado"
+                  },
+                  {
+                    "name": "Francés",
+                    "level": "Principiante"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "id": 1234,
+                    "mandatory": true,
+                    "description": "Que tenga carro"
+                  },
+                  {
+                    "id": 1235,
+                    "mandatory": false,
+                    "description": "Mas de 3 años de experiencia en cocina francesa"
+                  }
+                ],
+                "favorite": true,
+                "apply": false,
+                "educationlevel": "Universitario"
+              }
+            ]
+            
++ Response 404 (application/json)
+
+## /favorite/{?summary}
+User Favorite Marked Jobs
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+Summary: 
+
+    [
+        {
+            "id":"b3235571-d284-11e5-804f-008cfa0709a0",
+            "quantity":1,
+            "company": {
+                "logo":null,
+                "name":"DISPEZ RIO Y MAR SA"
+            },
+            "title":"Administrador(a) Edificio",
+            "venue":{
+                "lat": 4.6890893,
+                "lng": -74.0723214
+            },
+            "favorite": 0,
+            "apply": 1
+        },
+        ...
+    ]
+
++ Parameters
+    + summary: "1" (number, optional) - If response should be summarized
+    
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    
+    + Body
+    
+            [
+              {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "quantity": 3,
+                "company": {
+                  "logo": "https://example.com/logo.jpg",
+                  "name": "Banco XYZ",
+                },
+                "title": "Chef",
+                "description": "Minimo técnico en cocina con experiencia de minimo 4 años en hoteles y/o restaurantes de alto nivel",
+                "contracttype": {
+                  "name": "Término Fijo"
+                },
+                "published_at": "2015-02-09 10:03:28",
+                "expired_at": "2015-03-09 10:03:28",
+                "impairment": 1,
+                "jobcategory": {
+                  "name": "Contabilidad / Finanzas"
+                },
+                "jobtype": {
+                  "name": "Tiempo Completo"
+                },
+                "travel": 1,
+                "move": 0,
+                "salary": 3500000,
+                "salary_range": 4000000,
+                "salary_additional": "más bonos",
+                "venue": {
+                  "name": "Sede Uno",
+                  "address": "Carrera 12 # 13 - 14",
+                  "country": {
+                    "name": "Colombia"
+                  },
+                  "countryAdmin1": {
+                    "name": "Atlántico"
+                  },
+                  "countryAdmin2": {
+                    "name": "Barranquilla"
+                  },
+                  "lat": 11.004107,
+                  "lng": -74.806981
+                },
+                "languages": [
+                  {
+                    "name": "Inglés",
+                    "level": "Avanzado"
+                  },
+                  {
+                    "name": "Francés",
+                    "level": "Principiante"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "type": 0,
+                    "description": "Que tenga carro"
+                  },
+                  {
+                    "type": 1,
+                    "description": "Mas de 3 años de experiencia en cocina francesa"
+                  }
+                ],
+                "favorite": 0,
+                "apply": 1
+              }
+            ]
+              
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0"
+            }
+
++ Response 201 (application/json)
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0",
+                "user_id" : "b9a402d0-23a5-11e6-9513-0800274f2cef",
+            }
+              
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0"
+            }
+
++ Response 200 (application/json)
+              
++ Response 404 (application/json)
+
+## /recommended/{?summary}
+User Recommended Jobs
+
+### GET 
+
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+Summary: 
+
+    [
+        {
+            "id":"b3235571-d284-11e5-804f-008cfa0709a0",
+            "quantity":1,
+            "company": {
+                "logo":null,
+                "name":"DISPEZ RIO Y MAR SA"
+            },
+            "title":"Administrador(a) Edificio",
+            "venue":{
+                "lat": 4.6890893,
+                "lng": -74.0723214
+            },
+            "favorite": 0,
+            "apply": 1
+        },
+        ...
+    ]
+
++ Parameters
+    + summary: "1" (number, optional) - If response should be summarized
+    
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Job])
+    
+    + Body
+    
+            [
+              {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "quantity": 3,
+                "company": {
+                  "logo": "https://example.com/logo.jpg",
+                  "name": "Banco XYZ",
+                },
+                "title": "Chef",
+                "description": "Minimo técnico en cocina con experiencia de minimo 4 años en hoteles y/o restaurantes de alto nivel",
+                "contracttype": {
+                  "name": "Término Fijo"
+                },
+                "published_at": "2015-02-09 10:03:28",
+                "expired_at": "2015-03-09 10:03:28",
+                "impairment": 1,
+                "jobcategory": {
+                  "name": "Contabilidad / Finanzas"
+                },
+                "jobtype": {
+                  "name": "Tiempo Completo"
+                },
+                "travel": 1,
+                "move": 0,
+                "salary": 3500000,
+                "salary_range": 4000000,
+                "salary_additional": "más bonos",
+                "venue": {
+                  "name": "Sede Uno",
+                  "address": "Carrera 12 # 13 - 14",
+                  "country": {
+                    "name": "Colombia"
+                  },
+                  "countryAdmin1": {
+                    "name": "Atlántico"
+                  },
+                  "countryAdmin2": {
+                    "name": "Barranquilla"
+                  },
+                  "lat": 11.004107,
+                  "lng": -74.806981
+                },
+                "languages": [
+                  {
+                    "name": "Inglés",
+                    "level": "Avanzado"
+                  },
+                  {
+                    "name": "Francés",
+                    "level": "Principiante"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "type": 0,
+                    "description": "Que tenga carro"
+                  },
+                  {
+                    "type": 1,
+                    "description": "Mas de 3 años de experiencia en cocina francesa"
+                  }
+                ],
+                "favorite": 0,
+                "apply": 1
+              }
+            ]
+            
++ Response 404 (application/json)
+
+## /apply/{?summary}
+User Applied Jobs
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+Summary: 
+
+    [
+        {
+            "id":"b3235571-d284-11e5-804f-008cfa0709a0",
+            "quantity":1,
+            "company": {
+                "logo":null,
+                "name":"DISPEZ RIO Y MAR SA"
+            },
+            "title":"Administrador(a) Edificio",
+            "venue":{
+                "lat": 4.6890893,
+                "lng": -74.0723214
+            },
+            "favorite": 0,
+            "apply": 1
+        },
+        ...
+    ]
+
++ Parameters
+    + summary: "1" (number, optional) - If response should be summarized
+    
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    
+    + Body
+    
+            [
+              {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "quantity": 3,
+                "company": {
+                  "logo": "https://example.com/logo.jpg",
+                  "name": "Banco XYZ",
+                },
+                "title": "Chef",
+                "description": "Minimo técnico en cocina con experiencia de minimo 4 años en hoteles y/o restaurantes de alto nivel",
+                "contracttype": {
+                  "name": "Término Fijo"
+                },
+                "published_at": "2015-02-09 10:03:28",
+                "expired_at": "2015-03-09 10:03:28",
+                "impairment": 1,
+                "jobcategory": {
+                  "name": "Contabilidad / Finanzas"
+                },
+                "jobtype": {
+                  "name": "Tiempo Completo"
+                },
+                "travel": 1,
+                "move": 0,
+                "salary": 3500000,
+                "salary_range": 4000000,
+                "salary_additional": "más bonos",
+                "venue": {
+                  "name": "Sede Uno",
+                  "address": "Carrera 12 # 13 - 14",
+                  "country": {
+                    "name": "Colombia"
+                  },
+                  "countryAdmin1": {
+                    "name": "Atlántico"
+                  },
+                  "countryAdmin2": {
+                    "name": "Barranquilla"
+                  },
+                  "lat": 11.004107,
+                  "lng": -74.806981
+                },
+                "languages": [
+                  {
+                    "name": "Inglés",
+                    "level": "Avanzado"
+                  },
+                  {
+                    "name": "Francés",
+                    "level": "Principiante"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "type": 0,
+                    "description": "Que tenga carro"
+                  },
+                  {
+                    "type": 1,
+                    "description": "Mas de 3 años de experiencia en cocina francesa"
+                  }
+                ],
+                "favorite": 0,
+                "apply": 1
+              }
+            ]
+              
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0",
+                "requirements": [
+                  {
+                    "id": 1234,
+                    "status": 0
+                  },
+                  {
+                    "id": 1235,
+                    "status": 1
+                  }
+                ]
+            }
+
++ Response 201 (application/json)
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0",
+                "user_id" : "b9a402d0-23a5-11e6-9513-0800274f2cef"
+            }
+              
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0",
+                "requirements": [
+                  {
+                    "id": 1234,
+                    "status": 0
+                  },
+                  {
+                    "id": 1235,
+                    "status": 1
+                  }
+                ]
+            }
+
++ Response 201 (application/json)
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0",
+                "user_id" : "b9a402d0-23a5-11e6-9513-0800274f2cef"
+            }
+              
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "job_id" : "b3235571-d284-11e5-804f-008cfa0709a0"
+            }
+
++ Response 200 (application/json)
+              
++ Response 404 (application/json)
+
+
+# Group Users
+
+## /user/
+Get User Info
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (User)
+    
+            
+            
++ Response 404 (application/json)
+
+### POST
+User signup
+Header `X-API-KEY` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "email": "user@example.com",
+                "password": "userpassword",
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "timezone": "America/Bogota"
+            }
+
++ Response 201 (application/json)
+    
+    + Body
+    
+            {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "email": "user@example.com",
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "timezone": "America/Bogota",
+                "status": 1
+            }
+              
++ Response 404 (application/json)
+
+### PUT
+Edit User Info
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+             X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "email": "user@example.com",
+                "password": "userpassword",
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "timezone": "America/Bogota"
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+    
+            {
+                "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+                "email": "user@example.com",
+                "firstname": "Sebastian",
+                "lastname": "Perez",
+                "timezone": "America/Bogota",
+                "status": 1
+            }
+              
++ Response 404 (application/json)
+
+## /fullprofile/
+User Full Profile
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+
+        {
+            "firstname": "Sebastian",
+            "lastname": "Perez",
+            "email": "email@example.com",
+            "photo": "",
+            "description": "el programmer",
+            "career": "Analista en Sistemas",
+            "birthday": "1982-07-14",
+            "citizenship": null,
+            "relationship": "Soltero",
+            "children": 0,
+            "gender": "No definido",
+            "idtype": "Cédula de Ciudadanía",
+            "address": null,
+            "country": "0000000000",
+            "countryAdmin1": "00000",
+            "countryAdmin2": "0000000",
+            "mobile": null,
+            "telephone": null,
+            "jobcategory": "Producción / Operaciones",
+            "workstatus": "Busqueda Activa",
+            "workexperience": true,
+            "salaryexpectation": 123456789,
+            "education": [
+                {
+                    "educationlevel": "Bachiller",
+                    "institution": "Instituto Ejemplo",
+                    "title": "Bachiller con orientacion social",
+                    "daystart": "2014-05-12",
+                    "dayend": null
+                },
+                {
+                "educationlevel": {
+                  "id": 1,
+                  "name": "Educación Primaria"
+                },
+                "institution": "Colegio primario",
+                "title": "primarii",
+                "daystart": "2010-05-01",
+                "dayend": "2011-06-01"
+                }
+            ],
+            "language": [
+              {
+                "name": "finlandés",
+                "level": "Avanzado",
+                "certification": false,
+                "description": ""
+              },
+              {
+                "name": "español",
+                "level": "Básico",
+                "certification": true,
+                "description": "Re certificado"
+              }
+            ],
+            "course": [
+              {
+                "name": "Microsoft Office 2005",
+                "date": "2014-12-31",
+                "institution": "Academia Uno"
+              },
+              {
+                "name": "Microsoft Server 2005",
+                "date": "2013-05-10",
+                "institution": "Academia Dos"
+              }
+            ],
+            "skill": [
+              {
+                "name": "Orador Publico",
+                "description": "Experiencia en oratoria pública"
+              },
+              {
+                "name": "gran asador",
+                "description": "asado tipo argentino"
+              }
+            ],
+            "work": [
+              {
+                "company": "Empresa Uno",
+                "position": "CTO",
+                "activities": "Funciones cumplidas",
+                "daystart": "2005-05-10",
+                "dayend": "2007-02-01",
+                "country": "Colombia",
+                "countryAdmin1": "Cundinamarca",
+                "countryAdmin2": "Chía"
+              },
+              {
+                "company": "Empresas SA",
+                "position": "Recepcionista",
+                "activities": "Encargado de la recepción",
+                "daystart": "2014-12-31",
+                "dayend": "2015-12-31",
+                "country": "Colombia",
+                "countryAdmin1": "Cundinamarca",
+                "countryAdmin2": "Chía"
+              }
+            ],
+            "workreference": [
+              {
+                "name": "Erna Seifner",
+                "company": "Empresa Uno",
+                "position": "Gerente de Recursos Humanos",
+                "telephone": null,
+                "mobile": "47415318",
+                "email": "erna@empresauno.com",
+                "verified": false
+              },
+              {
+                "name": "Pepito Perez",
+                "company": "Perez Company",
+                "position": "Jefe de Personal",
+                "telephone": null,
+                "mobile": null,
+                "email": "pepito@perez.com",
+                "verified": true
+              },
+              {
+                "name": "Arnulfo Ospino",
+                "company": "Vandty SAS",
+                "position": "Jefe de Desarrollo",
+                "telephone": null,
+                "mobile": null,
+                "email": "noescribir@vendty.com",
+                "verified": true
+              }
+            ],
+            "personalreference": [
+              {
+                "name": "Fabian Carrillo",
+                "personalrelationship": "amigo",
+                "telephone": "4443333",
+                "mobile": "320112222",
+                "email": "fc@eventsite.com"
+              },
+              {
+                "name": "Martina Perez",
+                "personalrelationship": "hija",
+                "telephone": "5556666",
+                "mobile": "3108883333",
+                "email": "martuli@gmail.com"
+              }
+            ],
+            "profilecompletion": {
+                "timestamp": 1472679511,
+                "percentage": 95,
+                "incomplete": [
+                    {
+                        "name": "Educación",
+                        "required": true
+                    },
+                    {
+                        "name": "Experiencia",
+                        "required": true
+                    }
+                 ]
+            }
+        }
+
++ Response 404 (application/json)
+
+## /profile/
+User Profile
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    
+    + Body
+        
+            {
+                "photo": null,
+                "description": "el programmer",
+                "career": "Analista en Sistemas",
+                "birthday": "1982-07-14",
+                "citizenship": "colombiano",
+                "relationship": {
+                  "id": 1,
+                  "name": "Soltero"
+                },
+                "children": 2,
+                "gender": {
+                  "id": 1,
+                  "name": "Hombre"
+                },
+                "idtype": {
+                  "id": 1,
+                  "name": "Cédula de Ciudadanía"
+                },
+                "idnumber": 2933444,
+                "address": "Carrera 1 # 2 - 34",
+                "country": "Colombia",
+                "countryAdmin1": "Antioquia",
+                "countryAdmin2": "Medellín",
+                "location": "12-13-2424",
+                "mobile": 320888222,
+                "telephone": 14445555,
+                "jobcategory": {
+                  "id": 2,
+                  "name": "Producción / Operaciones"
+                },
+                "workstatus": {
+                  "id": 1,
+                  "name": "Busqueda Activa"
+                },
+                "workexperience": true,
+                "salaryexpectation": 123456789,
+                "profilecompletion": {
+                  "timestamp": 1472679511,
+                  "percentage": 100,
+                  "incomplete": []
+                }
+            }
+            
++ Response 404 (application/json)
+
+### POST
+Create User Profile
+
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "description": "",
+                "career": "",
+                "birthday": "2015-12-31",
+                "citizenship": "aleman",
+                "relationship_id": 1,
+                "children": 0,
+                "gender_id": 2,
+                "idtype_id": 1,
+                "idnumber": 0,
+                "address": "",
+                "location": "123-456-789",
+                "mobile": "",
+                "telephone": "",
+                "jobcategory_id": 32,
+                "workstatus_id": 1,
+                "workexperience": true,
+                "salaryexpectation": 123456789
+            }
+
++ Response 201 (application/json)
+    
+    + Body
+        
+            {
+                "photo": null,
+                "description": "el programmer",
+                "career": "Analista en Sistemas",
+                "birthday": "1982-07-14",
+                "citizenship": "colombiano",
+                "relationship": {
+                  "id": 1,
+                  "name": "Soltero"
+                },
+                "children": 2,
+                "gender": {
+                  "id": 1,
+                  "name": "Hombre"
+                },
+                "idtype": {
+                  "id": 1,
+                  "name": "Cédula de Ciudadanía"
+                },
+                "idnumber": 2933444,
+                "address": "Carrera 1 # 2 - 34",
+                "country": "Colombia",
+                "countryAdmin1": "Antioquia",
+                "countryAdmin2": "Medellín",
+                "location": "12-13-2424",
+                "mobile": 320888222,
+                "telephone": 14445555,
+                "jobcategory": {
+                  "id": 2,
+                  "name": "Producción / Operaciones"
+                },
+                "workstatus": {
+                  "id": 1,
+                  "name": "Busqueda Activa"
+                },
+                "workexperience": true,
+                "salaryexpectation": 123456789,
+                "profilecompletion": {
+                  "timestamp": 1472679511,
+                  "percentage": 100,
+                  "incomplete": []
+                }
+            }
+              
++ Response 404 (application/json)
+
+### PUT
+Update User Profile
+
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    
+    + Headers
+
+             X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "description": "",
+                "career": "",
+                "birthday": "2015-12-31",
+                "citizenship": "aleman",
+                "relationship_id": 1,
+                "children": 0,
+                "gender_id": 2,
+                "idtype_id": 1,
+                "idnumber": 23234,
+                "address": "",
+                "location": "123-456-789",
+                "mobile": "",
+                "telephone": "",
+                "jobcategory_id": "32",
+                "workstatus_id": 1,
+                "workexperience": true,
+                "salaryexpectation": 123456789,
+            }
+
++ Response 201 (application/json)
+    
+    + Body
+        
+            {
+                "photo": null,
+                "description": "el programmer",
+                "career": "Analista en Sistemas",
+                "birthday": "1982-07-14",
+                "citizenship": "colombiano",
+                "relationship": {
+                  "id": 1,
+                  "name": "Soltero"
+                },
+                "children": 2,
+                "gender": {
+                  "id": 1,
+                  "name": "Hombre"
+                },
+                "idtype": {
+                  "id": 1,
+                  "name": "Cédula de Ciudadanía"
+                },
+                "idnumber": 2933444,
+                "address": "Carrera 1 # 2 - 34",
+                "country": "Colombia",
+                "countryAdmin1": "Antioquia",
+                "countryAdmin2": "Medellín",
+                "location": "12-13-2424",
+                "mobile": 320888222,
+                "telephone": 14445555,
+                "jobcategory": {
+                  "id": 2,
+                  "name": "Producción / Operaciones"
+                },
+                "workstatus": {
+                  "id": 1,
+                  "name": "Busqueda Activa"
+                },
+                "workexperience": true,
+                "salaryexpectation": 123456789,
+                "profilecompletion": {
+                  "timestamp": 1472679511,
+                  "percentage": 100,
+                  "incomplete": []
+                }
+            }
+              
++ Response 404 (application/json)
+
+## /education/
+User Education
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Education])
+            
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "educationlevel_id": "5",
+                "institute": "Universidad del Rosario",
+                "title": "Abogado",
+                "daystart": "2001-12-31",
+                "dayend": "2007-12-31"
+            }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+                "educationlevel": {
+                    "id": 5,
+                    "name": "Universitario"
+                }
+                "institute": "Universidad del Rosario",
+                "title": "Abogado",
+                "daystart": "2001-12-31",
+                "dayend": "2007-12-31",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344,
+                "educationlevel_id": "5",
+                "institute": "Universidad del Rosario",
+                "title": "Abogado",
+                "daystart": "2001-12-31",
+                "dayend": "2007-12-31"
+            }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+                "educationlevel": {
+                    "id": 5,
+                    "name": "Universitario"
+                }
+                "institute": "Universidad del Rosario",
+                "title": "Abogado",
+                "daystart": "2001-12-31",
+                "dayend": "2007-12-31",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+## /language/
+User Languages
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Language])
+    
+    + Body
+    
+            [
+                {
+                    "id": 12345,
+                    "languagename": {
+                      "id": 0,
+                      "name": "inglés"
+                    },
+                    "languagelevel": {
+                      "id": 1,
+                      "level": "A0",
+                      "name": "Principiante"
+                    },
+                    "description": "TOEFL",
+                    "certification": true
+                }
+            ]
+                    
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "languagename_id": 1,
+                "languagelevel_id": 1,
+                "description": "TOEFL",
+                "certification": true
+            }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+                "id": 1235,
+                "languagename": {
+                    "id": 0,
+                    "name": "inglés"
+                },
+                "languagelevel": {
+                    "id": 1,
+                    "level": "A0",
+                    "name": "Principiante"
+                },
+                "description": "TOEFL",
+                "certification": true,
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 1235
+                "languagename_id": 1,
+                "languagelevel_id": 1,
+                "description": "TOEFL",
+                "certification": true
+            }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+                "id": 1235,
+                "languagename": {
+                    "id": 0,
+                    "name": "inglés"
+                },
+                "languagelevel": {
+                    "id": 1,
+                    "level": "A0",
+                    "name": "Principiante"
+                },
+                "description": "TOEFL",
+                "certification": true,
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+## /skill/
+User Skills
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Skill])
+            
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "name": "Microsoft Office",
+                "description": "Calculos complejos financieros en Excel"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {   
+                "id": 1235
+                "name": "Microsoft Office",
+                "description": "Calculos complejos financieros en Excel",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344,
+                "name": "Microsoft Office",
+                "description": "Calculos complejos financieros en Excel"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {   
+                "id": 1235
+                "name": "Microsoft Office",
+                "description": "Calculos complejos financieros en Excel",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+
+## /course/
+User Courses
+
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Course])
+            
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "name": "Curso de Mecánica Avanzada",
+                "date": "2015-12-31",
+                "institution": "Academia Uno"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {   
+                "id": 1235
+                "name": "Curso de Mecánica Avanzada",
+                "date": "2015-12-31",
+                "institution": "Academia Uno",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Curso de Mecánica Avanzada",
+                "date": "2015-12-31",
+                "institution": "Academia Uno"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {   
+                "id": 1235
+                "name": "Curso de Mecánica Avanzada",
+                "date": "2015-12-31",
+                "institution": "Academia Uno",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+
+## /work/
+User Previous Work
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    
+    + Body
+    
+            {
+                "id": 123,
+                "company": "Empresas SA",
+                "position": "Recepcionista",
+                "activities": "Encargado de la recepción",
+                "daystart": "2014-12-31",
+                "dayend": "2015-12-31",
+                "country": "Colombia",
+                "countryAdmin1": "Bogota D.C.",
+                "countryAdmin2": "Bogota D.C.",
+                "location": "12-43-3245",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "company": "Empresas SA",
+                "position": "Recepcionista",
+                "activities": "Encargado de la recepción",
+                "daystart": "2014-12-31",
+                "dayend": "2015-12-31",
+                "location": "12-43-3245"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": 123,
+                "company": "Empresas SA",
+                "position": "Recepcionista",
+                "activities": "Encargado de la recepción",
+                "daystart": "2014-12-31",
+                "dayend": "2015-12-31",
+                "country": "Colombia",
+                "countryAdmin1": "Bogota D.C.",
+                "countryAdmin2": "Bogota D.C.",
+                "location": "12-43-3245",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": "1235",
+                "company": "Empresas SA",
+                "position": "Recepcionista",
+                "activities": "Encargado de la recepción",
+                "daystart": "2014-12-31",
+                "dayend": "2015-12-31",
+                "location": "12-43-3245"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": 123,
+                "company": "Empresas SA",
+                "position": "Recepcionista",
+                "activities": "Encargado de la recepción",
+                "daystart": "2014-12-31",
+                "dayend": "2015-12-31",
+                "country": "Colombia",
+                "countryAdmin1": "Bogota D.C.",
+                "countryAdmin2": "Bogota D.C.",
+                "location": "12-43-3245",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+
+## /workreference/
+User Work References
+
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Workreference])
+            
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "name": "Jose Cito",
+                "company": "Empresa SA",
+                "position": "Jefe de Planta",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Jose Cito",
+                "company": "Empresa SA",
+                "position": "Jefe de Planta",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com",
+                "verified": false,
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Jose Cito",
+                "company": "Empresa SA",
+                "position": "Jefe de Planta",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Jose Cito",
+                "company": "Empresa SA",
+                "position": "Jefe de Planta",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com",
+                "verified": false,
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+## /personalreference/
+User Personal References
+
+
+### GET
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+
++ Response 200 (application/json)
+    + Attributes (array[Personalreference])
+            
++ Response 404 (application/json)
+
+### POST
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "name": "Jose Cito",
+                "personalrelationship": "primo",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Jose Cito",
+                "personalrelationship": "primo",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com",
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### PUT
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Jose Cito",
+                "personalrelationship": "primo",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id": 1235,
+                "name": "Jose Cito",
+                "personalrelationship": "primo",
+                "mobile": "3124567890",
+                "telephone": "+57 1 444 5555",
+                "email": "jefe@empresa.com",
+                "verified": false,
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
+
+### DELETE
+Header `X-API-KEY` (required) and `X-ACCESS-TOKEN` (required)
+
++ Request
+    + Headers
+
+            X-API-KEY: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+            X-ACCESS-TOKEN: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+    
+    + Body
+    
+            {
+                "id": 12344
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "profilecompletion": {
+                    "timestamp": 1462838400,
+                    "percentage": 60,
+                    "incomplete": [
+                        {
+                            "name": "Educación",
+                            "required": true
+                        },
+                        {
+                            "name": "Experiencia",
+                            "required": true
+                        }
+                    ]
+                }
+            }
+            
++ Response 404 (application/json)
